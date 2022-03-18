@@ -1,38 +1,44 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
+import { CreateCustomerDto, UpdateCustomerDto } from 'src/dtos/customer.dtos';
+import { CustomersService } from 'src/services/customers.service';
 
 @Controller('customers')
 export class CustomersController {
+
+  constructor(private customerService: CustomersService) {}
+
   @Get('')
   getCustomers(@Query('limit') limit = 100, @Query('offset') offset = 0) {
-    return `customer: limit => ${limit}, offset => ${offset}`;
+    return this.customerService.getAll();
   }
 
   @Get(':customerId')
   getBrand(@Param('customerId') customerId: string) {
-    return `customer: ${customerId}`;
+    return this.customerService.getOne(+customerId);
   }
 
   @Post()
-  create(@Body() payload: any) {
-    return {
-      message: 'acción de crear',
-      payload,
-    };
+  create(@Body() payload: CreateCustomerDto) {
+    console.log(payload);
+    return this.customerService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() payload: any ) {
-    return {
-      id,
-      payload,
-    };
+  update(@Param('id') id: string, @Body() payload: UpdateCustomerDto) {
+    return this.customerService.update(+id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return {
-      id,
-    };
+  delete(@Param('id') id: string) {
+    return this.customerService.remove(+id);
   }
 }
-

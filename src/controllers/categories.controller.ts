@@ -1,32 +1,41 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { CategoriesService } from '../services/categories.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { CreateCategoryDto, UpdateCategoryDto } from 'src/dtos/category.dtos';
 
 @Controller('categories')
 export class CategoriesController {
-  @Get(':id/products/:productId')
-  getCategory(@Param('productId') productId: string, @Param('id') id: string) {
-    return `product: ${productId} and ${id}`;
+  constructor(private categoriesService: CategoriesService) {}
+
+  @Get('')
+  getCategories() {
+    return this.categoriesService.getAll();
+  }
+
+  @Get(':categoryId')
+  getCategory(@Param('categoryId') categoryId: string) {
+    return this.categoriesService.getOne(+categoryId);
   }
 
   @Post()
-  create(@Body() payload: any) {
-    return {
-      message: 'acción de crear',
-      payload,
-    };
+  create(@Body() payload: CreateCategoryDto) {
+    return this.categoriesService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() payload: any ) {
-    return {
-      id,
-      payload,
-    };
+  update(@Param('id') id: string, @Body() payload: UpdateCategoryDto) {
+    return this.categoriesService.update(+id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return {
-      id,
-    };
+  delete(@Param('id') id: string) {
+    return this.categoriesService.remove(+id);
   }
 }
