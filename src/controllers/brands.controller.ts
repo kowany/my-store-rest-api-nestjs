@@ -1,39 +1,41 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
+import { CreateBrandDto, UpdateBrandDto } from 'src/dtos/brand.dtos';
+import { BrandsService } from 'src/services/brands.service';
 
 @Controller('brands')
 export class BrandsController {
+  constructor(private brandService: BrandsService) {}
   @Get('')
   getBrands(@Query('limit') limit = 100, @Query('offset') offset = 0) {
-    return `brands: limit => ${limit}, offset => ${offset}`;
+    return this.brandService.findAll();
   }
 
   @Get(':brandId')
   getOne(@Param('brandId') brandId: string) {
-    return {
-      brandId,
-    };
+    return this.brandService.findOne(+brandId);
   }
 
   @Post()
-  create(@Body() payload: any) {
-    return {
-      message: 'acción de crear',
-      payload,
-    };
+  create(@Body() payload: CreateBrandDto) {
+    return this.brandService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() payload: any ) {
-    return {
-      id,
-      payload,
-    };
+  update(@Param('id') id: string, @Body() payload: UpdateBrandDto) {
+    return this.brandService.update(+id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return {
-      id,
-    };
+  delete(@Param('id') id: string) {
+    return this.brandService.remove(+id);
   }
 }
