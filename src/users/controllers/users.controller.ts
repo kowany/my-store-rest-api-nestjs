@@ -8,23 +8,33 @@ import {
   Delete,
   Put,
 } from '@nestjs/common';
-import { CreateUserDto } from './../dtos/user.dtos';
+import { ParseIntPipe } from './../../common/parse-int.pipe';
+import { CreateUserDto, UpdateUserDto } from './../dtos/user.dtos';
 import { UsersService } from './../services/users.service';
 
 @Controller('users')
 export class UsersController {
-
   constructor(private usersService: UsersService) {}
 
   @Get('')
-  getUsers(@Query('limit') limit = 100, @Query('offset') offset = 0) {
-    return this.usersService.getAll();
+  findAll() {
+    return this.usersService.findAll();
   }
 
-  @Get(':userId')
-  getOrder(@Param('userId') userId: string) {
-    return this.usersService.getOne(+userId);
+  @Get(':id')
+  get(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.findOne(id);
   }
+
+  @Get(':id/orders') //  👈 new endpoint
+  getOrders(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.getOrderByUser(id);
+  }
+  // @Get(':id/orders')
+  // getOrders(@Param('id, ParseIntPipe') id: string) {
+  //   console.log(+id);
+  //   return this.usersService.getOrdersByUser(+id);
+  // }
 
   @Post()
   create(@Body() payload: CreateUserDto) {
@@ -32,8 +42,11 @@ export class UsersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() payload: any) {
-    return this.usersService.update(+id, payload);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: UpdateUserDto,
+  ) {
+    return this.usersService.update(id, payload);
   }
 
   @Delete(':id')

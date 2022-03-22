@@ -1,7 +1,9 @@
 // src/entities/order.entity.ts
+import { User } from './user.entity';
+import { Product } from './../../products/entities/product.entity';
 export class Order {
-  id: number;
-  orderDate: Date;
-  customerId: number;
-  orderTotal: number;
+  date: Date;
+  user: User;
+  products: Product[];
 }
+
