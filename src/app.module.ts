@@ -12,11 +12,13 @@ import { DatabaseModule } from './database/database.module';
 import { lastValueFrom } from 'rxjs';
 
 import { environments } from './environments';
+import config from './config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: environments[process.env.NODE_ENV] || '.env',
+      load: [config],
       isGlobal: true,
     }),
     ProductsModule,
