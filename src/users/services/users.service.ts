@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 
 import { ProductsService } from './../../products/services/products.service';
 
@@ -9,7 +9,10 @@ import { CreateUserDto, UpdateUserDto } from './../dtos/user.dtos';
 
 @Injectable()
 export class UsersService {
-  constructor(private productsService: ProductsService) {};
+  constructor(
+    private productsService: ProductsService,
+    @Inject('API_KEY') private apiKey: string,
+  ) {}
   private counterId = 1;
   private users: User[] = [
     {

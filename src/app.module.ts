@@ -5,19 +5,13 @@ import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 import { lastValueFrom } from 'rxjs';
-
-const API_KEY = '124345634';
-const API_KEY_PROD = 'PROD123456';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [ProductsModule, UsersModule, HttpModule],
+  imports: [ProductsModule, UsersModule, HttpModule, DatabaseModule],
   controllers: [AppController],
   providers: [
     AppService,
-    {
-      provide: 'API_KEY',
-      useValue: (process.env.MODE_ENV = 'prod' ? API_KEY_PROD : API_KEY),
-    },
     {
       provide: 'TASKS',
       useFactory: async (http: HttpService) => {
