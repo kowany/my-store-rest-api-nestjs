@@ -1,14 +1,27 @@
 import { Module } from '@nestjs/common';
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { AppController } from './app.controller';
+import { ConfigModule } from '@nestjs/config';
+
 import { AppService } from './app.service';
+
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
-import { lastValueFrom } from 'rxjs';
 import { DatabaseModule } from './database/database.module';
 
+import { lastValueFrom } from 'rxjs';
+
 @Module({
-  imports: [ProductsModule, UsersModule, HttpModule, DatabaseModule],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+    }),
+    ProductsModule,
+    UsersModule,
+    HttpModule,
+    DatabaseModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,
