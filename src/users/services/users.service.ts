@@ -5,7 +5,7 @@ import { ProductsService } from './../../products/services/products.service';
 import { Order } from '../entities/order.entity';
 import { User } from './../entities/user.entity';
 
-import { CreateUserDto, UpdateUserDto } from './../dtos/user.dtos';
+import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
