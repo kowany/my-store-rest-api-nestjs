@@ -10,7 +10,7 @@ async function bootstrap() {
   // específico el whiteList a true va a quitar del
   // payload todo lo que no esté definido en el DTO.
   // Otra opción que podemos aplicar al ValidationPipes
-  // es el forbidNonWhitelisted, que permite indicar al
+  // es el   forbidNonWhitelisted, que permite indicar al
   // usuario que está enviando un atributo que no es
   // válido
   app.useGlobalPipes(
