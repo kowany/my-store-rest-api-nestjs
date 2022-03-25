@@ -9,12 +9,9 @@ import {
   Delete,
   HttpStatus,
   HttpCode,
-  // Res,
-  // ParseIntPipe,
 } from '@nestjs/common';
 
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-// import { Response } from 'express';
 import { ParseIntPipe } from './../../common/parse-int.pipe';
 import { CreateProductDto, UpdateProductDto } from '../dtos/products.dto';
 import { ProductsService } from './../services/products.service';
@@ -34,9 +31,6 @@ export class ProductsController {
     @Query('brand') brand: string,
   ) {
     return this.productsService.findAll();
-    // return {
-    // message: `products: limit => ${limit}, offset => ${offset}, brand => ${brand} `,
-    // };
   }
   @Get('filter')
   getProductFilter() {
@@ -50,16 +44,6 @@ export class ProductsController {
   @HttpCode(HttpStatus.ACCEPTED)
   getOne(@Param('productId', ParseIntPipe) productId: number) {
     return this.productsService.findOne(productId);
-    // @Res() response: Response, esto va dentro getOne
-    // Esta es la forma en que trabaja express
-    // response.status(200).send({
-    //   message: `product: ${productId}`,
-    // });
-    // La siguiente manera es la forma en como lo
-    // trabaja Nestjs
-    // return {
-    //   message: `product: ${productId}`,
-    // };
   }
 
   @Post()
@@ -67,20 +51,7 @@ export class ProductsController {
   create(@Body() payload: CreateProductDto) {
     console.log(payload);
     return this.productsService.create(payload);
-    // return {
-    //   message: 'acción de crear',
-    //   payload,
-    // };
   }
-
-  // @Put(':id')
-  // update(@Param('id') id: number, @Body() payload: any) {
-  //   return this.productsService.update(id, payload);
-  //   // return {
-  //   //   id,
-  //   //   payload,
-  //   // };
-  // }
 
   @Put(':id')
   @ApiOperation({ summary: `Update product with productId` })
@@ -92,16 +63,5 @@ export class ProductsController {
   @ApiOperation({ summary: `Delete product with productId` })
   delete(@Param('id') id: string) {
     return this.productsService.remove(+id);
-    // return {
-    //   id,
-    //   // message: `product con id: ${id} eliminado con éxito`
-    // };
   }
 }
-// Los pipes transforman y validad información
-// La salida de un pipe puede ser la entrada de otro
-
-// Los Data Transfers Objects (DTO) son objetos que
-// permiten tipar y validar cuando uno envía información
-// Es buena práctica mantener separados los DTO's y
-// los entities
