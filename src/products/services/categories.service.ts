@@ -37,7 +37,7 @@ export class CategoriesService {
   update(id: number, payload: UpdateCategoryDto) {
     const category = this.getOne(id);
     if (category) {
-      const index = this.categories.findIndex( (category) => category.id === id);
+      const index = this.categories.findIndex((category) => category.id === id);
       this.categories[index] = {
         ...category,
         ...payload,

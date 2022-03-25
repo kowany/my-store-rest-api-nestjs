@@ -6,4 +6,3 @@ export class Order {
   user: User;
   products: Product[];
 }
-

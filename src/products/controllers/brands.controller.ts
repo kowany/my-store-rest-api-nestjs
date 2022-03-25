@@ -8,7 +8,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger'
+import { ApiTags } from '@nestjs/swagger';
 
 import { CreateBrandDto, UpdateBrandDto } from '../dtos/brand.dto';
 import { BrandsService } from '../services/brands.service';

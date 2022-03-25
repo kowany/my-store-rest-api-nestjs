@@ -8,7 +8,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger'
+import { ApiTags } from '@nestjs/swagger';
 
 import { CreateCategoryDto, UpdateCategoryDto } from '../dtos/category.dto';
 

@@ -17,7 +17,6 @@ import { lastValueFrom } from 'rxjs';
 import { environments } from './environments';
 import config from './config';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({
